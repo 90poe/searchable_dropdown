@@ -83,6 +83,8 @@ class DropdownSearch<T> extends StatefulWidget {
   ///the max height for dialog/bottomSheet/Menu
   final double maxHeight;
 
+  final bool keyboardAvoid;
+
   ///the max width for the dialog
   final double dialogMaxWidth;
 
@@ -159,6 +161,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.popupBackgroundColor,
     this.enabled = true,
     this.maxHeight,
+    this.keyboardAvoid = true,
     this.filterFn,
     this.itemAsString,
     this.showSelectedItem = false,
@@ -338,12 +341,21 @@ class _DropdownSearchState<T> extends State<DropdownSearch<T>> {
         shape: widget.popupShape,
         context: context,
         builder: (context) {
+          var maxHeight = widget.maxHeight ?? 350;
+          var milliseconds = 300;
+
+          if (!widget.keyboardAvoid) {
+            maxHeight -= MediaQuery.of(context).viewInsets.bottom;
+            milliseconds = 0;
+          }
+
           return SingleChildScrollView(
-            child: Padding(
+            child: AnimatedPadding(
+              duration: Duration(milliseconds: milliseconds),
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
-              child: _selectDialogInstance(data, defaultHeight: 350),
+              child: _selectDialogInstance(data, height: maxHeight),
             ),
           );
         });
@@ -378,16 +390,17 @@ class _DropdownSearchState<T> extends State<DropdownSearch<T>> {
             enabled: false,
             child: Container(
               width: popupButtonObject.size.width,
-              child: _selectDialogInstance(data, defaultHeight: 224),
+              child:
+                  _selectDialogInstance(data, height: widget.maxHeight ?? 224),
             ),
           ),
         ]);
   }
 
-  SelectDialog<T> _selectDialogInstance(T data, {double defaultHeight}) {
+  SelectDialog<T> _selectDialogInstance(T data, {double height}) {
     return SelectDialog<T>(
       popupTitle: widget.popupTitle,
-      maxHeight: widget.maxHeight ?? defaultHeight,
+      maxHeight: height,
       isFilteredOnline: widget.isFilteredOnline,
       itemAsString: widget.itemAsString,
       filterFn: widget.filterFn,

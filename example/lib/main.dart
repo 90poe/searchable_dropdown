@@ -91,8 +91,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ///BottomSheet Mode with no searchBox
               DropdownSearch<String>(
                 mode: Mode.BOTTOM_SHEET,
-                maxHeight: 300,
-                items: ["Brazil", "Italia", "Tunisia", 'Canada'],
+                maxHeight: 700,
+                keyboardAvoid: false,
+                items: [
+                  "Brazil",
+                  "Italia",
+                  "Tunisia",
+                  'Canada',
+                  'Canada',
+                  'Canada',
+                  'Canada',
+                  'Canada',
+                  'Canada'
+                ],
                 label: "Custom BottomShet mode",
                 onChanged: print,
                 selectedItem: "Brazil",
@@ -128,6 +139,48 @@ class _MyHomePageState extends State<MyHomePage> {
                     topRight: Radius.circular(24),
                   ),
                 ),
+              ),
+              Divider(),
+
+              ///merge online and offline data in the same list and set custom max Height
+              DropdownSearch<UserModel>(
+                items: [
+                  UserModel(name: "Offline name1", id: "999"),
+                  UserModel(name: "Offline name2", id: "0101")
+                ],
+                maxHeight: 300,
+                onFind: (String filter) => getData(filter),
+                label: "choose a user",
+                onChanged: print,
+                showSearchBox: true,
+              ),
+              Divider(),
+
+              ///merge online and offline data in the same list and set custom max Height
+              DropdownSearch<UserModel>(
+                items: [
+                  UserModel(name: "Offline name1", id: "999"),
+                  UserModel(name: "Offline name2", id: "0101")
+                ],
+                maxHeight: 300,
+                onFind: (String filter) => getData(filter),
+                label: "choose a user",
+                onChanged: print,
+                showSearchBox: true,
+              ),
+              Divider(),
+
+              ///merge online and offline data in the same list and set custom max Height
+              DropdownSearch<UserModel>(
+                items: [
+                  UserModel(name: "Offline name1", id: "999"),
+                  UserModel(name: "Offline name2", id: "0101")
+                ],
+                maxHeight: 300,
+                onFind: (String filter) => getData(filter),
+                label: "choose a user",
+                onChanged: print,
+                showSearchBox: true,
               ),
               Divider(),
 
